@@ -63,6 +63,11 @@
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     }
 
+    nav.glass-panel {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
     .glass-card {
       background: linear-gradient(145deg, rgba(30,30,35,0.6) 0%, rgba(15,15,20,0.6) 100%);
       backdrop-filter: blur(10px);
@@ -282,7 +287,7 @@
                 opacity: { duration: 3, ease: "easeInOut" },
                 scale: { duration: 15, ease: "linear" } 
               }}
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute -top-[10%] left-0 w-full h-[120%] bg-cover bg-bottom"
               style={{ backgroundImage: `url(${GTA_IMAGES[currentIndex]})` }}
             />
           </AnimatePresence>
