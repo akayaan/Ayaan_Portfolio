@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1280">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayaan Khan | Game Developer & Technical Artist</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
@@ -285,9 +285,11 @@
     };
 
     const Navbar = ({ currentPage, setCurrentPage }) => {
+      const [menuOpen, setMenuOpen] = React.useState(false);
+
       const navItem = (id, label) => (
         <button 
-          onClick={() => setCurrentPage(id)} 
+          onClick={() => { setCurrentPage(id); setMenuOpen(false); }} 
           className={`transition-colors font-medium text-sm tracking-wider ${currentPage === id ? 'text-primary text-glow' : 'text-gray-400 hover:text-white'}`}
         >
           {label}
@@ -297,14 +299,34 @@
       return (
         <nav className="fixed top-0 w-full z-50 glass-panel border-b-0 border-white/5">
           <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <button onClick={() => setCurrentPage('home')} className="font-display font-bold text-xl tracking-wider text-white">AYAAN<span className="text-primary text-glow">.DEV</span></button>
-            <div className="flex gap-8 items-center">
+            <button onClick={() => { setCurrentPage('home'); setMenuOpen(false); }} className="font-display font-bold text-xl tracking-wider text-white">AYAAN<span className="text-primary text-glow">.DEV</span></button>
+            {/* Desktop nav */}
+            <div className="hidden md:flex gap-8 items-center">
               {navItem('about', 'ABOUT')}
               {navItem('games', 'GAMES')}
               {navItem('extras', 'EXTRAS')}
               {navItem('resume', 'RESUME')}
             </div>
+            {/* Hamburger — mobile only */}
+            <button
+              className="md:hidden flex flex-col justify-center gap-[5px] p-2 z-50"
+              onClick={() => setMenuOpen(o => !o)}
+              aria-label="Toggle Menu"
+            >
+              <span className={`block w-6 h-0.5 bg-primary transition-all duration-300 origin-center ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`}></span>
+              <span className={`block w-6 h-0.5 bg-primary transition-all duration-300 ${menuOpen ? 'opacity-0 scale-x-0' : ''}`}></span>
+              <span className={`block w-6 h-0.5 bg-primary transition-all duration-300 origin-center ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`}></span>
+            </button>
           </div>
+          {/* Mobile dropdown */}
+          {menuOpen && (
+            <div className="md:hidden flex flex-col items-center gap-8 py-8 border-t border-white/10 bg-dark/95 backdrop-blur-lg">
+              {navItem('about', 'ABOUT')}
+              {navItem('games', 'GAMES')}
+              {navItem('extras', 'EXTRAS')}
+              {navItem('resume', 'RESUME')}
+            </div>
+          )}
         </nav>
       );
     };
