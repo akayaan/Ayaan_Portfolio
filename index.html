@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1920, initial-scale=1.0, minimum-scale=0.1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayaan Khan | Game Developer & Technical Artist</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
@@ -98,6 +98,53 @@
     .proj-bg-2 { background: linear-gradient(45deg, #11998e 0%, #38ef7d 100%); }
     .proj-bg-3 { background: linear-gradient(45deg, #cb2d3e 0%, #ef473a 100%); }
     .proj-bg-4 { background: linear-gradient(45deg, #141E30 0%, #243B55 100%); }
+
+    /* ===== MOBILE STYLES ===== */
+    @media (max-width: 767px) {
+      /* Navbar */
+      nav .max-w-7xl { padding-left: 1rem; padding-right: 1rem; }
+
+      /* Hero text */
+      h1 { font-size: 2.2rem !important; line-height: 1.2 !important; }
+      .hero-sub { font-size: 1rem !important; }
+
+      /* Sections padding */
+      .max-w-7xl { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+      /* Cards hover disabled on touch */
+      .glass-card:hover { transform: none; }
+
+      /* Music button position */
+      .fixed.bottom-8.right-8 { bottom: 1rem; right: 1rem; padding: 0.6rem; }
+
+      /* Project cards image height */
+      .h-48 { height: 10rem; }
+
+      /* Extras art card height */
+      .h-96 { height: 14rem; }
+
+      /* Footer */
+      footer { padding: 1.5rem 1rem; }
+    }
+
+    /* ===== LANDSCAPE PHONE ===== */
+    @media (max-width: 900px) and (orientation: landscape) {
+      /* Make the hero shorter so it fits in one screen */
+      .min-h-\[90vh\] { min-height: 70vh !important; }
+
+      /* Shrink hero heading */
+      h1 { font-size: 2.5rem !important; }
+
+      /* Reduce top padding in main */
+      main { padding-top: 5rem !important; }
+
+      /* Reduce section gaps */
+      .mb-16 { margin-bottom: 2rem !important; }
+      .mb-12 { margin-bottom: 1.5rem !important; }
+
+      /* Extras cards shorter in landscape */
+      .h-96 { height: 12rem; }
+    }
     .proj-bg-5 { background: linear-gradient(45deg, #8E2DE2 0%, #4A00E0 100%); }
     .proj-bg-6 { background: linear-gradient(45deg, #f12711 0%, #f5af19 100%); }
   </style>
