@@ -99,51 +99,28 @@
     .proj-bg-3 { background: linear-gradient(45deg, #cb2d3e 0%, #ef473a 100%); }
     .proj-bg-4 { background: linear-gradient(45deg, #141E30 0%, #243B55 100%); }
 
-    /* ===== MOBILE STYLES ===== */
+    /* ===== MOBILE PORTRAIT ===== */
     @media (max-width: 767px) {
-      /* Navbar */
-      nav .max-w-7xl { padding-left: 1rem; padding-right: 1rem; }
-
-      /* Hero text */
-      h1 { font-size: 2.2rem !important; line-height: 1.2 !important; }
-      .hero-sub { font-size: 1rem !important; }
-
-      /* Sections padding */
-      .max-w-7xl { padding-left: 1rem !important; padding-right: 1rem !important; }
-
-      /* Cards hover disabled on touch */
-      .glass-card:hover { transform: none; }
-
-      /* Music button position */
-      .fixed.bottom-8.right-8 { bottom: 1rem; right: 1rem; padding: 0.6rem; }
-
-      /* Project cards image height */
-      .h-48 { height: 10rem; }
-
-      /* Extras art card height */
-      .h-96 { height: 14rem; }
-
-      /* Footer */
-      footer { padding: 1.5rem 1rem; }
-    }
-
-    /* ===== LANDSCAPE PHONE ===== */
-    @media (max-width: 900px) and (orientation: landscape) {
-      /* Make the hero shorter so it fits in one screen */
-      .min-h-\[90vh\] { min-height: 70vh !important; }
-
-      /* Shrink hero heading */
-      h1 { font-size: 2.5rem !important; }
-
-      /* Reduce top padding in main */
-      main { padding-top: 5rem !important; }
-
-      /* Reduce section gaps */
+      body { overflow-x: hidden; }
+      main { padding-top: 5.5rem !important; padding-bottom: 3rem !important; }
+      .max-w-7xl { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
       .mb-16 { margin-bottom: 2rem !important; }
       .mb-12 { margin-bottom: 1.5rem !important; }
+      h1 { font-size: 2.4rem !important; line-height: 1.2 !important; margin-bottom: 1rem !important; }
+      .h-48 { height: 9rem !important; }
+      .h-96 { height: 13rem !important; }
+      .glass-card:hover { transform: none !important; }
+      footer { padding: 1.25rem 1rem !important; font-size: 0.75rem !important; }
+    }
 
-      /* Extras cards shorter in landscape */
-      .h-96 { height: 12rem; }
+    /* ===== MOBILE LANDSCAPE ===== */
+    @media (max-width: 900px) and (orientation: landscape) {
+      main { padding-top: 4.5rem !important; }
+      h1 { font-size: 2.2rem !important; line-height: 1.15 !important; }
+      .mb-16 { margin-bottom: 1.5rem !important; }
+      .mb-12 { margin-bottom: 1rem !important; }
+      .h-96 { height: 10rem !important; }
+      .h-48 { height: 8rem !important; }
     }
     .proj-bg-5 { background: linear-gradient(45deg, #8E2DE2 0%, #4A00E0 100%); }
     .proj-bg-6 { background: linear-gradient(45deg, #f12711 0%, #f5af19 100%); }
@@ -183,7 +160,7 @@
         story: [
           "Zorun began with a simple idea: to create a fun, fast-action game that feels exciting like classic arcade shooters but with a new emotional twist. Inspired by the classic Duck Hunt, we imagined: What if instead of hunting targets, players had to protect someone important?",
           "That's when the idea of the dancing cat was born.",
-          "In Zorun, zombies suddenly appear and rush toward the cat. The player becomes the hero, tapping quickly to defeat them and save the cat. But we wanted more than just shooting — we added a smart challenge: when your ammo runs out, the game tests your memory by asking how many zombies you defeated. If you answer correctly, your gun reloads. If not, the silence of an empty gun makes the danger feel real — and the cat depends on your focus."
+          "In Zorun, zombies suddenly appear and rush toward the cat. The player becomes the hero, tapping quickly to defeat them and save the cat. But we wanted more than just shooting â€” we added a smart challenge: when your ammo runs out, the game tests your memory by asking how many zombies you defeated. If you answer correctly, your gun reloads. If not, the silence of an empty gun makes the danger feel real â€” and the cat depends on your focus."
         ],
         features: ["Tap-to-Shoot Combat", "Memory-based Reload System", "Wave Spawning", "Dynamic Difficulty"],
         bgClass: "proj-bg-1",
@@ -196,7 +173,7 @@
         title: "NOVA DASH Z",
         type: "Endless Arcade Survival",
         engine: "Unity",
-        description: "An endless arcade survival game built around a highly addictive core loop. Navigate a spaceship through an increasingly fast asteroid field across three distinct lanes — dodge, collect, and blast your way to a new high score.",
+        description: "An endless arcade survival game built around a highly addictive core loop. Navigate a spaceship through an increasingly fast asteroid field across three distinct lanes â€” dodge, collect, and blast your way to a new high score.",
         story: [
           "Nova_Z is an endless arcade survival game built around a highly addictive core loop. The primary objective is to navigate a spaceship through an increasingly fast and dangerous asteroid field. Movement is structured across three distinct lanes, controlled by intuitive left-and-right swipe gestures.",
           "To survive the escalating difficulty, players can collect coins scattered throughout the void, which act as ammunition for the ship's weapon systems. Once armed, a quick double-tap anywhere on the screen fires a laser to obliterate obstacles in the ship's path.",
@@ -215,8 +192,8 @@
         engine: "Unity",
         description: "A thrilling endless driving game using gyro movement for intuitive controls. Survive as long as possible while the speed progressively increases.",
         story: [
-          "TurboTotsDrive is a thrilling endless driving game where players control their car using gyro movement for a smooth and immersive experience. As players survive longer, the car’s speed gradually increases, creating a more intense and challenging gameplay experience over time.",
-          "The objective is simple — stay on the road, avoid obstacles, and survive as long as possible. But one mistake can end the run instantly. When the player crashes, the car dramatically breaks apart and scatters across the road, adding impact and excitement to every collision.",
+          "TurboTotsDrive is a thrilling endless driving game where players control their car using gyro movement for a smooth and immersive experience. As players survive longer, the carâ€™s speed gradually increases, creating a more intense and challenging gameplay experience over time.",
+          "The objective is simple â€” stay on the road, avoid obstacles, and survive as long as possible. But one mistake can end the run instantly. When the player crashes, the car dramatically breaks apart and scatters across the road, adding impact and excitement to every collision.",
           "With dynamic speed progression, intuitive controls, and fast-paced gameplay, TurboTotsDrive delivers an exciting endless driving experience designed for players of all ages."
         ],
         features: ["Gyro Controls", "Dynamic Speed Progression", "Destruction Physics", "Endless Gameplay"],
@@ -233,7 +210,7 @@
         description: "An addictive arcade game where you launch a watermelon into baskets. Build combos to activate Fire Mode for double points, but miss and your streak resets!",
         story: [
           "DunkArc is a fun and addictive arcade basketball-style game where players launch a watermelon into baskets using perfect timing and precise aim. The game rewards consistency by activating the exciting Fire Watermelon Mode whenever players achieve consecutive successful shots.",
-          "As the player's streak increases — first 3 shots, then 4, and beyond — the duration of Fire Mode becomes longer, adding more excitement and challenge to the gameplay. During Fire Mode, every successful shot earns double points, allowing players to rapidly increase their score.",
+          "As the player's streak increases â€” first 3 shots, then 4, and beyond â€” the duration of Fire Mode becomes longer, adding more excitement and challenge to the gameplay. During Fire Mode, every successful shot earns double points, allowing players to rapidly increase their score.",
           "However, missing a shot comes with a penalty. If the watermelon falls back into a previous basket, the streak resets, and players must rebuild their combo from the beginning.",
           "With simple controls, satisfying mechanics, and endless arcade-style gameplay, DunkArc offers a fast-paced and competitive experience that challenges players to maintain their streak and achieve the highest score possible."
         ],
@@ -251,7 +228,7 @@
         description: "A fast-paced endless arcade game where you must keep a fire alive by throwing falling logs into it. React quickly as the logs fall faster and the fire burns quicker!",
         story: [
           "Ignite Drop is a fast-paced endless arcade game where players must keep a fire alive by throwing falling logs into it. Each successful throw fuels the flame and rewards the player with points, creating a simple yet highly addictive gameplay loop.",
-          "As the game continues, the challenge intensifies — logs begin falling faster while the fire burns out more quickly, requiring players to react with speed and precision to survive.",
+          "As the game continues, the challenge intensifies â€” logs begin falling faster while the fire burns out more quickly, requiring players to react with speed and precision to survive.",
           "With straightforward mechanics, increasing difficulty, and endless gameplay, Ignite Drop delivers an exciting survival experience that challenges players to stay focused, keep the fire burning, and achieve the highest score possible."
         ],
         features: ["Survival Mechanics", "Progressive Difficulty System", "Physics-based Throwing", "Score Tracking"],
@@ -268,7 +245,7 @@
         description: "An endless road-crossing arcade game where you control a cat surviving busy roads. Features a unique idle dancing mechanic that summons a deadly monster!",
         story: [
           "PutoRush is an endless road-crossing arcade game where players control a cat trying to survive through busy roads filled with fast-moving cars and dangerous obstacles. The goal is to keep moving, avoid collisions, and survive for as long as possible.",
-          "The game features a unique idle mechanic — if the player does not move the cat for 3 seconds, the cat starts dancing. If the cat continues dancing for another 3 seconds, a monster appears and kills the cat, instantly ending the run. This mechanic keeps players constantly active and adds tension and humor to the gameplay experience.",
+          "The game features a unique idle mechanic â€” if the player does not move the cat for 3 seconds, the cat starts dancing. If the cat continues dancing for another 3 seconds, a monster appears and kills the cat, instantly ending the run. This mechanic keeps players constantly active and adds tension and humor to the gameplay experience.",
           "With simple controls, endless progression, and a fun risk-reward system, PutoRush delivers a fast-paced and entertaining arcade survival experience."
         ],
         features: ["Endless Road-Crossing", "Idle Monster Mechanic", "Obstacle Avoidance", "Risk-Reward System"],
@@ -365,7 +342,7 @@
               {navItem('extras', 'EXTRAS')}
               {navItem('resume', 'RESUME')}
             </div>
-            {/* Hamburger — mobile only */}
+            {/* Hamburger â€” mobile only */}
             <button
               className="md:hidden flex flex-col justify-center gap-[5px] p-2 z-50"
               onClick={() => setMenuOpen(o => !o)}
@@ -474,7 +451,7 @@
               className="lg:col-span-5 glass-card p-8 rounded-2xl flex flex-col justify-center"
             >
               <p className="text-gray-300 leading-relaxed mb-6 text-lg">
-                Hi, I’m Ayaan — a game developer focused on creating immersive 3D gameplay experiences using <strong className="text-white">Unity</strong>.
+                Hi, Iâ€™m Ayaan â€” a game developer focused on creating immersive 3D gameplay experiences using <strong className="text-white">Unity</strong>.
               </p>
               <p className="text-gray-300 leading-relaxed mb-6 text-lg">
                 I enjoy building game mechanics, level design, and interactive systems while exploring creative gameplay ideas.
@@ -821,7 +798,7 @@
 
     const Footer = () => (
       <footer className="py-8 mt-auto border-t border-white/10 text-center text-gray-600 text-sm">
-        <p>© {new Date().getFullYear()} Ayaan Khan. Crafted with passion.</p>
+        <p>Â© {new Date().getFullYear()} Ayaan Khan. Crafted with passion.</p>
       </footer>
     );
 
@@ -1050,3 +1027,4 @@
   </script>
 </body>
 </html>
+
