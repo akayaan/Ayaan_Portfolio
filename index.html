@@ -1,979 +1,972 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Ayaan Khan - Game Art & Dev Portfolio</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayaan Khan | Game Developer & Technical Artist</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            dark: '#030305',
+            darker: '#010102',
+            primary: '#00f0ff',
+            secondary: '#7000ff',
+            accent: '#ff003c'
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #7000ff33 0deg, #00f0ff33 180deg, #7000ff33 360deg)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap');
+    
+    body { 
+      background-color: #030305; 
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+
+    .gta-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(3,3,5,0.95) 100%);
+      z-index: -1;
+    }
+
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #010102; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+
+    .glass-panel {
+      background: rgba(20, 20, 25, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .glass-card {
+      background: linear-gradient(145deg, rgba(30,30,35,0.6) 0%, rgba(15,15,20,0.6) 100%);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .glass-card:hover {
+      border-color: rgba(0, 240, 255, 0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(0, 240, 255, 0.1);
+    }
+
+    .text-glow {
+      text-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+    }
+
+    .bg-grid {
+      background-size: 50px 50px;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    }
+
+    .proj-bg-1 { background: linear-gradient(45deg, #2a0845 0%, #6441A5 100%); }
+    .proj-bg-2 { background: linear-gradient(45deg, #11998e 0%, #38ef7d 100%); }
+    .proj-bg-3 { background: linear-gradient(45deg, #cb2d3e 0%, #ef473a 100%); }
+    .proj-bg-4 { background: linear-gradient(45deg, #141E30 0%, #243B55 100%); }
+    .proj-bg-5 { background: linear-gradient(45deg, #8E2DE2 0%, #4A00E0 100%); }
+    .proj-bg-6 { background: linear-gradient(45deg, #f12711 0%, #f5af19 100%); }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+      "framer-motion": "https://esm.sh/framer-motion@11.0.8?deps=react@18.2.0,react-dom@18.2.0",
+      "lucide-react": "https://esm.sh/lucide-react@0.358.0?deps=react@18.2.0"
+    }
+  }
+  </script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-type="module">
+    import React, { useState } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import { motion, AnimatePresence } from 'framer-motion';
+    import { Gamepad2, Code2, MonitorPlay, Download, ChevronRight, Layers, Cpu, Sword, User, Briefcase, FileText, Image as ImageIcon, Crosshair, Wrench, BrainCircuit, Coffee, Volume2, VolumeX, Rocket, Car, Target, Flame, Cat } from 'lucide-react';
+
+    // ==========================================
+    // DATA
+    // ==========================================
+    const PROJECTS = [
+      {
+        id: "zorun",
+        title: "ZORUN",
+        type: "Action / Arcade Shooter",
+        engine: "Unity",
+        description: "A fast-action arcade game where you must protect a dancing cat from hordes of zombies. Features a unique memory-based reload mechanic to keep players engaged and on their toes.",
+        story: [
+          "Zorun began with a simple idea: to create a fun, fast-action game that feels exciting like classic arcade shooters but with a new emotional twist. Inspired by the classic Duck Hunt, we imagined: What if instead of hunting targets, players had to protect someone important?",
+          "That's when the idea of the dancing cat was born.",
+          "In Zorun, zombies suddenly appear and rush toward the cat. The player becomes the hero, tapping quickly to defeat them and save the cat. But we wanted more than just shooting — we added a smart challenge: when your ammo runs out, the game tests your memory by asking how many zombies you defeated. If you answer correctly, your gun reloads. If not, the silence of an empty gun makes the danger feel real — and the cat depends on your focus."
+        ],
+        features: ["Tap-to-Shoot Combat", "Memory-based Reload System", "Wave Spawning", "Dynamic Difficulty"],
+        bgClass: "proj-bg-1",
+        image: "./Images/zorun_cover.png",
+        icon: <Crosshair size={48} className="text-white/50" />,
+        video: "https://player.vimeo.com/video/1192496890"
+      },
+      {
+        id: "nova_z",
+        title: "NOVA DASH Z",
+        type: "Vertical Space Shooter",
+        engine: "Unity",
+        description: "An exciting vertical space shooter game. Players control a high-speed spacecraft, dodging obstacles and destroying enemy ships in a fast-paced galactic environment.",
+        features: ["Ship Movement & Control", "Projectile System", "Enemy AI Patterns", "Score Tracking"],
+        bgClass: "proj-bg-2",
+        image: "./Images/Nova_Z.png",
+        icon: <Rocket size={48} className="text-white/50" />,
+        video: "https://player.vimeo.com/video/1192500026"
+      },
+      {
+        id: "turbototsdrive",
+        title: "TURBOTOTSDRIVE",
+        type: "Endless Driving Game",
+        engine: "Unity",
+        description: "A thrilling endless driving game using gyro movement for intuitive controls. Survive as long as possible while the speed progressively increases.",
+        story: [
+          "TurboTotsDrive is a thrilling endless driving game where players control their car using gyro movement for a smooth and immersive experience. As players survive longer, the car’s speed gradually increases, creating a more intense and challenging gameplay experience over time.",
+          "The objective is simple — stay on the road, avoid obstacles, and survive as long as possible. But one mistake can end the run instantly. When the player crashes, the car dramatically breaks apart and scatters across the road, adding impact and excitement to every collision.",
+          "With dynamic speed progression, intuitive controls, and fast-paced gameplay, TurboTotsDrive delivers an exciting endless driving experience designed for players of all ages."
+        ],
+        features: ["Gyro Controls", "Dynamic Speed Progression", "Destruction Physics", "Endless Gameplay"],
+        bgClass: "proj-bg-3",
+        image: "./Images/TurboTotsDrive.png",
+        icon: <Car size={48} className="text-white/50" />,
+        video: "https://player.vimeo.com/video/1192497226"
+      },
+      {
+        id: "dunkarc",
+        title: "DUNKARC",
+        type: "Arcade Basketball",
+        engine: "Unity",
+        description: "An addictive arcade game where you launch a watermelon into baskets. Build combos to activate Fire Mode for double points, but miss and your streak resets!",
+        story: [
+          "DunkArc is a fun and addictive arcade basketball-style game where players launch a watermelon into baskets using perfect timing and precise aim. The game rewards consistency by activating the exciting Fire Watermelon Mode whenever players achieve consecutive successful shots.",
+          "As the player's streak increases — first 3 shots, then 4, and beyond — the duration of Fire Mode becomes longer, adding more excitement and challenge to the gameplay. During Fire Mode, every successful shot earns double points, allowing players to rapidly increase their score.",
+          "However, missing a shot comes with a penalty. If the watermelon falls back into a previous basket, the streak resets, and players must rebuild their combo from the beginning.",
+          "With simple controls, satisfying mechanics, and endless arcade-style gameplay, DunkArc offers a fast-paced and competitive experience that challenges players to maintain their streak and achieve the highest score possible."
+        ],
+        features: ["Combo & Streak System", "Physics-based Launch Mechanics", "Dynamic Scoring (Fire Mode)", "Endless Gameplay"],
+        bgClass: "proj-bg-4",
+        image: "./Images/Dunkarc.png",
+        icon: <Target size={48} className="text-white/50" />,
+        video: "https://player.vimeo.com/video/1192501635"
+      },
+      {
+        id: "ignitedrop",
+        title: "IGNITE DROP",
+        type: "Arcade Survival",
+        engine: "Unity",
+        description: "A fast-paced endless arcade game where you must keep a fire alive by throwing falling logs into it. React quickly as the logs fall faster and the fire burns quicker!",
+        story: [
+          "Ignite Drop is a fast-paced endless arcade game where players must keep a fire alive by throwing falling logs into it. Each successful throw fuels the flame and rewards the player with points, creating a simple yet highly addictive gameplay loop.",
+          "As the game continues, the challenge intensifies — logs begin falling faster while the fire burns out more quickly, requiring players to react with speed and precision to survive.",
+          "With straightforward mechanics, increasing difficulty, and endless gameplay, Ignite Drop delivers an exciting survival experience that challenges players to stay focused, keep the fire burning, and achieve the highest score possible."
+        ],
+        features: ["Survival Mechanics", "Progressive Difficulty System", "Physics-based Throwing", "Score Tracking"],
+        bgClass: "proj-bg-5",
+        image: "./Images/Ignite Drop.png",
+        icon: <Flame size={48} className="text-white/50" />,
+        video: "https://player.vimeo.com/video/1192501247"
+      },
+      {
+        id: "putorush",
+        title: "PUTORUSH",
+        type: "Arcade Survival",
+        engine: "Unity",
+        description: "An endless road-crossing arcade game where you control a cat surviving busy roads. Features a unique idle dancing mechanic that summons a deadly monster!",
+        story: [
+          "PutoRush is an endless road-crossing arcade game where players control a cat trying to survive through busy roads filled with fast-moving cars and dangerous obstacles. The goal is to keep moving, avoid collisions, and survive for as long as possible.",
+          "The game features a unique idle mechanic — if the player does not move the cat for 3 seconds, the cat starts dancing. If the cat continues dancing for another 3 seconds, a monster appears and kills the cat, instantly ending the run. This mechanic keeps players constantly active and adds tension and humor to the gameplay experience.",
+          "With simple controls, endless progression, and a fun risk-reward system, PutoRush delivers a fast-paced and entertaining arcade survival experience."
+        ],
+        features: ["Endless Road-Crossing", "Idle Monster Mechanic", "Obstacle Avoidance", "Risk-Reward System"],
+        bgClass: "proj-bg-6",
+        image: "./Images/putorush.png",
+        icon: <Cat size={48} className="text-white/50" />,
+        video: "https://player.vimeo.com/video/1192499017"
+      }
+    ];
+
+    const EXTRAS_2D = [
+      { title: "Sketch: Tanjiro Kamado", type: "2D Art", image: "./Images/1.jpg" },
+      { title: "Sketch: Anime Girl", type: "2D Art", image: "./Images/2.jpg" },
+      { title: "Sketch: Goku", type: "2D Art", image: "./Images/3.jpg" },
+      { title: "Sketch: Satoru Gojo", type: "2D Art", image: "./Images/4.jpg" },
+      { title: "Sketch: Giyu Tomioka", type: "2D Art", image: "./Images/5.jpg" },
+    ];
+
+    const EXTRAS_3D = [
+      { title: "Modular Asset: Shelf", type: "3D Asset", image: "./Images/3d1.png" },
+      { title: "Prop Texturing: Chips Pack", type: "3D Asset", image: "./Images/3d2.png" },
+      { title: "Hard-Surface Modeling: Bottle", type: "3D Asset", image: "./Images/3d3.png" },
+      { title: "Weapon Asset: Magic Staff", type: "3D Asset", image: "./Images/3d4.png" },
+      { title: "Prop Asset: Treasure Chest", type: "3D Asset", image: "./Images/3d5.png" },
+      { title: "Character Model: Chef Bob", type: "3D Asset", image: "./Images/3d6.jpg" },
+      { title: "Environment Blockout", type: "3D Asset", image: "./Images/3d6.2.jpg" },
+      { title: "Technical Demo: UV Mapping", type: "3D Asset", image: "./Images/3d8.jpeg" },
+    ];
+
+    // ==========================================
+    // COMPONENTS
+    // ==========================================
+
+    const GTA_IMAGES = [
+      'https://i.imgur.com/WeL3tIJ.jpg',
+      'https://i.imgur.com/1SIMnDs.jpg',
+      'https://i.imgur.com/LKNXjXx.jpg',
+      'https://i.imgur.com/uYPZdHV.jpg',
+      'https://i.imgur.com/LX6Pqqi.jpg'
+    ];
+
+    const BackgroundSlideshow = () => {
+      const [currentIndex, setCurrentIndex] = useState(0);
+
+      React.useEffect(() => {
+        // Change image every 8 seconds
+        const timer = setInterval(() => {
+          setCurrentIndex((prev) => (prev + 1) % GTA_IMAGES.length);
+        }, 8000);
+        return () => clearInterval(timer);
+      }, []);
+
+      return (
+        <div className="fixed inset-0 z-[-2] overflow-hidden bg-dark">
+          <AnimatePresence>
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, scale: 1 }}
+              animate={{ opacity: 1, scale: 1.1 }}
+              exit={{ opacity: 0 }}
+              transition={{ 
+                opacity: { duration: 3, ease: "easeInOut" },
+                scale: { duration: 15, ease: "linear" } 
+              }}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${GTA_IMAGES[currentIndex]})` }}
+            />
+          </AnimatePresence>
+        </div>
+      );
+    };
+
+    const Navbar = ({ currentPage, setCurrentPage }) => {
+      const navItem = (id, label) => (
+        <button 
+          onClick={() => setCurrentPage(id)} 
+          className={`transition-colors font-medium text-sm tracking-wider ${currentPage === id ? 'text-primary text-glow' : 'text-gray-400 hover:text-white'}`}
+        >
+          {label}
+        </button>
+      );
+
+      return (
+        <nav className="fixed top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <button onClick={() => setCurrentPage('home')} className="font-display font-bold text-xl tracking-wider text-white">AYAAN<span className="text-primary text-glow">.DEV</span></button>
+            <div className="hidden md:flex gap-8 items-center">
+              {navItem('about', 'ABOUT')}
+              {navItem('games', 'GAMES')}
+              {navItem('extras', 'EXTRAS')}
+              {navItem('resume', 'RESUME')}
+            </div>
+          </div>
+        </nav>
+      );
+    };
+
+    const Hero = ({ setCurrentPage }) => (
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-grid opacity-20"></div>
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-hero-glow blur-[100px] rounded-full"
+          ></motion.div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
+            className="max-w-3xl"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel border-primary/30 text-primary text-xs font-medium mb-6">
+              <span className="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+              AVAILABLE FOR HIRE
+            </div>
+            
+            <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
+              Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary text-glow">Immersive</span> Worlds & Systems.
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-gray-400 mb-10 font-light max-w-2xl">
+              I am <strong className="text-white">Ayaan Khan</strong>, a Unity Developer, Technical Artist, and Game Programmer.
+            </p>
+            
+            <div className="flex flex-wrap gap-4">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setCurrentPage('games')} 
+                className="px-8 py-4 bg-white text-dark font-semibold rounded-lg hover:bg-primary transition-colors flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]"
+              >
+                View Projects <ChevronRight size={18} />
+              </motion.button>
+
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setCurrentPage('resume')} 
+                className="px-8 py-4 glass-panel text-white font-semibold rounded-lg border border-white/20 hover:border-primary transition-colors flex items-center gap-2"
+              >
+                <Download size={18} /> Resume
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    );
+
+    const About = () => {
+      const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+
+      return (
+      <section className="relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center gap-4 mb-16">
+            <img src="./Images/mini_goku.png" alt="Mini Goku" className="w-10 h-10 rounded-full border-2 border-primary object-cover shadow-[0_0_15px_rgba(0,240,255,0.5)]" />
+            <h2 className="font-display text-4xl font-bold">About Me</h2>
+          </div>
+          
+          <div className="grid lg:grid-cols-12 gap-8 items-stretch">
+            {/* Image Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-3 rounded-2xl overflow-hidden glass-card p-2 relative group flex flex-col cursor-pointer"
+              onClick={() => setIsPhotoModalOpen(true)}
+            >
+              <img src="./Images/Ayaan.jpeg" alt="Ayaan Khan" className="w-full flex-1 min-h-[300px] lg:h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none group-hover:ring-primary/50 transition-colors duration-500"></div>
+            </motion.div>
+
+            {/* Text Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="lg:col-span-5 glass-card p-8 rounded-2xl flex flex-col justify-center"
+            >
+              <p className="text-gray-300 leading-relaxed mb-6 text-lg">
+                Hi, I’m Ayaan — a game developer focused on creating immersive 3D gameplay experiences using <strong className="text-white">Unity</strong>.
+              </p>
+              <p className="text-gray-300 leading-relaxed mb-6 text-lg">
+                I enjoy building game mechanics, level design, and interactive systems while exploring creative gameplay ideas.
+              </p>
+              <p className="text-gray-300 leading-relaxed text-lg">
+                I have completed an <strong className="text-white">M.Sc. in Game Technology</strong> and continuously improve my skills through personal projects that combine creativity, problem-solving, and player-focused design.
+              </p>
+            </motion.div>
+
+            {/* Skills Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:col-span-4 grid grid-cols-2 gap-4"
+            >
+              <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center gap-3 h-full">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity" className="w-12 h-12 mb-1 drop-shadow-md brightness-200" />
+                <h3 className="font-bold text-white leading-tight">Unity Engine</h3>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center gap-3 h-full">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maya/maya-original.svg" alt="Maya" className="w-12 h-12 mb-1 drop-shadow-md" />
+                <h3 className="font-bold text-white leading-tight">Autodesk Maya</h3>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center gap-3 h-full">
+                <Layers size={40} className="text-accent mb-2 drop-shadow-[0_0_10px_rgba(255,0,60,0.5)]" />
+                <h3 className="font-bold text-white leading-tight">Technical Art</h3>
+                <p className="text-[10px] text-gray-400 uppercase tracking-widest">Optimization & Aesthetic</p>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05, y: -5 }} className="glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center gap-3 h-full">
+                <Wrench size={40} className="text-yellow-400 mb-2 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]" />
+                <h3 className="font-bold text-white leading-tight">3D Modeling</h3>
+                <p className="text-[10px] text-gray-400 uppercase tracking-widest">Environments</p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {isPhotoModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsPhotoModalOpen(false)}
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 md:p-12 cursor-zoom-out"
+            >
+              <button 
+                className="absolute top-6 right-6 text-white/50 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-[110]"
+                onClick={() => setIsPhotoModalOpen(false)}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+              
+              <motion.img
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                src="./Images/Ayaan.jpeg"
+                alt="Ayaan Khan"
+                className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </section>
+    );
+  };
+
+    const ProjectModal = ({ project, onClose }) => {
+      if (!project) return null;
+      return (
+        <AnimatePresence>
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={onClose}
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-darker border border-white/10 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl"
+              onClick={e => e.stopPropagation()}
+            >
+              {project.videoLocal ? (
+                <div className="aspect-video w-full bg-black">
+                  <video src={project.videoLocal} autoPlay loop controls className="w-full h-full object-contain" onCanPlay={(e) => { e.target.volume = 0.4; }}></video>
+                </div>
+              ) : project.video ? (
+                <div className="aspect-video w-full bg-black">
+                  <iframe src={`${project.video}?autoplay=1`} frameBorder="0" className="w-full h-full" allow="autoplay; fullscreen"></iframe>
+                </div>
+              ) : (
+                <div className={`h-64 w-full ${project.bgClass} flex items-center justify-center`}>
+                  {project.icon}
+                </div>
+              )}
+              
+              <div className="p-8 max-h-[50vh] overflow-y-auto custom-scrollbar">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h2 className="font-display text-3xl font-bold mb-2">{project.title}</h2>
+                    <p className="text-primary text-sm font-medium tracking-wide">{project.type} | {project.engine}</p>
+                  </div>
+                  <button onClick={onClose} className="text-gray-400 hover:text-white bg-white/5 p-2 rounded-full transition-colors shrink-0 ml-4">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  </button>
+                </div>
+                
+                <p className="text-gray-300 mb-8 leading-relaxed">{project.description}</p>
+                
+                {project.story && (
+                  <div className="mb-8 p-6 glass-panel rounded-xl border border-primary/20 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <h3 className="font-display text-2xl font-bold text-white mb-4 text-glow flex items-center gap-2">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                      The Story Behind {project.title}
+                    </h3>
+                    <div className="space-y-4 text-gray-300 leading-relaxed relative z-10">
+                      {project.story.map((para, idx) => (
+                        <p key={idx} className={idx === 1 ? "italic text-white/80" : ""}>{para}</p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Cpu size={18}/> Technical Contributions</h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {project.features.map((feat, idx) => (
+                    <li key={idx} className="flex items-center gap-2 text-sm text-gray-400">
+                      <div className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></div>
+                      {feat}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
+      );
+    }
+
+    const Games = ({ onVideoModalOpen, onVideoModalClose }) => {
+      const [selectedProject, setSelectedProject] = useState(null);
+
+      const openProject = (proj) => {
+        setSelectedProject(proj);
+        if ((proj.video || proj.videoLocal) && onVideoModalOpen) {
+          onVideoModalOpen();
+        }
+      };
+
+      const closeProject = () => {
+        if ((selectedProject?.video || selectedProject?.videoLocal) && onVideoModalClose) {
+          onVideoModalClose();
+        }
+        setSelectedProject(null);
+      };
+
+      return (
+        <section className="relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center gap-4 mb-16">
+              <img src="./Images/mini_senku.png" alt="Mini Senku" className="w-10 h-10 rounded-full border-2 border-secondary object-cover shadow-[0_0_15px_rgba(255,0,255,0.4)]" />
+              <h2 className="font-display text-4xl font-bold">Games & Projects</h2>
+            </div>
+            
+            <p className="text-gray-300 text-lg max-w-3xl mb-12 leading-relaxed">
+              Explore my game development projects, showcasing <span className="text-primary font-medium">gameplay mechanics</span>, <span className="text-secondary font-medium">3D experiences</span>, and creative ideas focused on interactive and engaging player experiences.
+            </p>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {PROJECTS.map((proj, idx) => (
+                <motion.div 
+                  key={proj.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  onClick={() => openProject(proj)}
+                  className="glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col h-full shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                >
+                  <div className={`h-48 w-full ${proj.bgClass} flex items-center justify-center relative overflow-hidden`}>
+                    {proj.image && (
+                      <img src={proj.image} alt={proj.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    )}
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors"></div>
+                    {!proj.image && (
+                      <motion.div whileHover={{ scale: 1.1 }} className="z-10 transition-transform">
+                        {proj.icon}
+                      </motion.div>
+                    )}
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors">{proj.title}</h3>
+                    <p className="text-xs font-mono text-gray-500 mb-4">{proj.type}</p>
+                    <p className="text-sm text-gray-400 line-clamp-3 mt-auto">{proj.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          {selectedProject && <ProjectModal project={selectedProject} onClose={closeProject} />}
+        </section>
+      );
+    };
+
+    const Extras = () => {
+      const [selectedImage, setSelectedImage] = useState(null);
+      
+      return (
+      <section className="relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center gap-4 mb-16">
+            <img src="./Images/mini_gojo.png" alt="Mini Gojo" className="w-10 h-10 rounded-full border-2 border-accent object-cover shadow-[0_0_15px_rgba(255,0,60,0.5)]" />
+            <h2 className="font-display text-4xl font-bold">Extras & Art</h2>
+          </div>
+          
+          <p className="text-gray-300 text-lg max-w-3xl mb-12 leading-relaxed">
+            Beyond the code. A curated gallery of my <span className="text-primary font-medium">2D illustrations</span> and <span className="text-secondary font-medium">3D assets</span>. This is where technical precision meets artistic vision, showcasing the creative foundation behind my engineering.
+          </p>
+
+          <div className="mb-16">
+            <h3 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3 border-b border-white/10 pb-4">
+              <User size={24} className="text-primary" /> 2D Sketches
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {EXTRAS_2D.map((item, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  onClick={() => { if (item.image) setSelectedImage(item) }}
+                  className="glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col h-full shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="h-96 w-full bg-dark flex items-center justify-center relative overflow-hidden">
+                    {item.image && (
+                      <>
+                        <img src={item.image} alt="" className="absolute inset-0 w-full h-full object-cover blur-xl opacity-20 group-hover:opacity-40 transition-all duration-700 z-0 scale-125" />
+                        <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 z-10 p-2" />
+                      </>
+                    )}
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-20 pointer-events-none"></div>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col bg-dark/40 backdrop-blur-sm border-t border-white/5 relative z-30">
+                    <h3 className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                    <p className="text-xs font-mono text-gray-400 mt-auto">{item.type}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-12">
+            <h3 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3 border-b border-white/10 pb-4">
+              <Layers size={24} className="text-secondary" /> 3D Assets
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {EXTRAS_3D.map((item, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  onClick={() => { if (item.image) setSelectedImage(item) }}
+                  className="glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col h-full shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="h-96 w-full bg-dark flex items-center justify-center relative overflow-hidden">
+                    {item.image && (
+                      <>
+                        <img src={item.image} alt="" className="absolute inset-0 w-full h-full object-cover blur-xl opacity-20 group-hover:opacity-40 transition-all duration-700 z-0 scale-125" />
+                        <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 z-10 p-2" />
+                      </>
+                    )}
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-20 pointer-events-none"></div>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col bg-dark/40 backdrop-blur-sm border-t border-white/5 relative z-30">
+                    <h3 className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                    <p className="text-xs font-mono text-gray-400 mt-auto">{item.type}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedImage(null)}
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 md:p-12 cursor-zoom-out"
+            >
+              <button 
+                className="absolute top-6 right-6 text-white/50 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-[110]"
+                onClick={() => setSelectedImage(null)}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+              
+              <motion.img
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                src={selectedImage.image}
+                alt={selectedImage.title}
+                className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </section>
+    );
+  };
+
+    const Resume = () => (
+      <section className="relative">
+        <div className="max-w-4xl mx-auto px-6 text-center mt-12">
+          <img src="./Images/mini_kratos.png" alt="Mini Kratos" className="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-white object-cover shadow-[0_0_20px_rgba(255,255,255,0.5)]" />
+          <h2 className="font-display text-4xl font-bold mb-6">Detailed Curriculum Vitae</h2>
+          <p className="text-gray-400 mb-10 text-lg">
+            For a detailed breakdown of my education, professional experience, skills, and technical proficiencies in Unity, C#, and 3D modeling, please download my CV.
+          </p>
+          <a 
+            href="./Technical_Artist_Ayaankhan.pdf" 
+            target="_blank"
+            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-bold rounded-xl hover:bg-primary hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all transform hover:-translate-y-1"
+          >
+            <Download size={24} /> DOWNLOAD FULL RESUME (PDF)
+          </a>
+        </div>
+      </section>
+    );
+
+    const Footer = () => (
+      <footer className="py-8 mt-auto border-t border-white/10 text-center text-gray-600 text-sm">
+        <p>© {new Date().getFullYear()} Ayaan Khan. Crafted with passion.</p>
+      </footer>
+    );
+
+    function App() {
+      const [currentPage, setCurrentPage] = useState('home');
+      const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+
+      const audioRef = React.useRef(null);
+
+      // Play aggressively on any user interaction if standard autoplay is blocked
+      React.useEffect(() => {
+        const events = ['click', 'touchstart'];
+        let isAttemptingToPlay = false;
         
-        <style>
-            /* This targets the main navigation action bar within each article */
-            .article-nav .actions {
-                display: flex;
-                justify-content: center; /* Center the buttons horizontally */
-                align-items: center;
-                margin: 0 auto 3em; /* Center the whole bar and add bottom margin */
-                padding: 0;
-                list-style: none;
-            }
-            .article-nav .actions li {
-                margin: 0 10px; /* Add some spacing between buttons */
-            }
+        const handleInteraction = () => {
+          if (audioRef.current && audioRef.current.paused && !isAttemptingToPlay) {
+             isAttemptingToPlay = true;
+             audioRef.current.volume = 0.15;
+             audioRef.current.play().then(() => {
+               // Remove listeners once successfully playing
+               events.forEach(evt => document.removeEventListener(evt, handleInteraction));
+               setIsMusicPlaying(true);
+             }).catch(() => {
+                 isAttemptingToPlay = false;
+             });
+          }
+        };
 
-            /* --- NEW CARD STYLES FOR #WORK SECTION --- */
-            .project-card {
-                border: 1px solid rgba(255, 255, 255, 0.15); /* Soft border */
-                border-radius: 8px;
-                overflow: hidden;
-                background-color: #242424; /* Darker background for the card */
-                transition: transform 0.2s, box-shadow 0.2s;
-                height: 100%; /* Ensures cards in the same row are the same height */
-                display: flex;
-                flex-direction: column;
-            }
+        // Attempt to play immediately first
+        if (audioRef.current && audioRef.current.paused) {
+            isAttemptingToPlay = true;
+            audioRef.current.volume = 0.15;
+            audioRef.current.play().catch(() => {
+                isAttemptingToPlay = false;
+            });
+        }
 
-            .project-card:hover {
-                transform: translateY(-5px); /* Lift effect on hover */
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-                background-color: #2b2b2b;
-            }
+        events.forEach(evt => document.addEventListener(evt, handleInteraction, { passive: true }));
+        
+        return () => {
+          events.forEach(evt => document.removeEventListener(evt, handleInteraction));
+        };
+      }, []);
 
-            .project-card img {
-                width: 100%;
-                height: 200px; /* Fixed height for consistent card tops */
-                object-fit: cover;
-                display: block;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
+      // Audio elements
+      const swooshSound = React.useMemo(() => new Audio('https://actions.google.com/sounds/v1/science_fiction/fast_flyby.ogg'), []);
+      const activitySounds = React.useMemo(() => ({
+        home: new Audio('https://actions.google.com/sounds/v1/ambiences/city_street_traffic.ogg'), 
+        about: new Audio('./hey_its_me_goku.mp3'), 
+        games: new Audio('./dr_stone.mp3'), 
+        extras: new Audio('./gojo.mp3'), 
+        resume: new Audio('./i_will_have_my_revenge.mp3'),
+        resume_crash: new Audio('https://actions.google.com/sounds/v1/impacts/crash.ogg')
+      }), []);
 
-            .card-content {
-                padding: 1.5em;
-                flex-grow: 1; /* Allows content area to fill remaining height */
-            }
+      // Global UI sounds
+      React.useEffect(() => {
+        const hoverSound = new Audio('https://actions.google.com/sounds/v1/ui/beep_short.ogg');
+        hoverSound.volume = 0.05; 
+        
+        const clickSound = new Audio('https://actions.google.com/sounds/v1/ui/button_click.ogg');
+        clickSound.volume = 0.3;
 
-            .card-content h4 {
-                margin-top: 0;
-                margin-bottom: 0.5em;
-                color: #4CAF50; /* Highlight color for the title */
-            }
+        const handleMouseOver = (e) => {
+          if (e.target.closest('button') || e.target.closest('.glass-card') || e.target.closest('a')) {
+            hoverSound.currentTime = 0;
+            hoverSound.play().catch(() => {});
+          }
+        };
 
-            .project-info {
-                margin: 0.2em 0;
-                font-size: 0.9em;
-                color: rgba(255, 255, 255, 0.7);
-            }
+        const handleClick = (e) => {
+          if (e.target.closest('button') || e.target.closest('.glass-card') || e.target.closest('a')) {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(() => {});
+          }
+        };
 
-            a.card-link {
-                text-decoration: none;
-                border-bottom: none;
-                color: inherit;
-                display: block; /* Make the entire card area clickable */
-                height: 100%;
+        document.addEventListener('mouseover', handleMouseOver);
+        document.addEventListener('click', handleClick);
+
+        return () => {
+          document.removeEventListener('mouseover', handleMouseOver);
+          document.removeEventListener('click', handleClick);
+        };
+      }, []);
+
+      const handlePageChange = (page) => {
+        if (page === currentPage) return;
+        
+        setCurrentPage(page);
+
+        // Play swoosh immediately
+        swooshSound.currentTime = 0;
+        swooshSound.volume = 0.5;
+        swooshSound.play().catch(e => console.log('Audio auto-play blocked:', e));
+
+        // Stop all other activity sounds
+        Object.values(activitySounds).forEach(sound => {
+          sound.pause();
+          sound.currentTime = 0;
+          sound.onended = null;
+        });
+
+        const pauseBgPages = ['about', 'extras', 'resume', 'games'];
+
+        // Resume bg music if navigating away from a page that paused it
+        if (!pauseBgPages.includes(page) && audioRef.current && audioRef.current.paused) {
+          audioRef.current.play().catch(e => console.log('Audio auto-play blocked:', e));
+        }
+
+        // Play activity sound
+        const activity = activitySounds[page];
+        if (activity) {
+          if (page === 'resume') {
+            const crash = activitySounds['resume_crash'];
+            crash.currentTime = 0;
+            crash.volume = 0.5;
+            
+            if (audioRef.current) audioRef.current.pause();
+            
+            crash.onended = () => {
+              activity.currentTime = 0;
+              activity.volume = 0.5;
+              activity.onended = () => {
+                if (audioRef.current) audioRef.current.play().catch(e => console.log('Audio auto-play blocked:', e));
+              };
+              activity.play().catch(e => console.log('Audio auto-play blocked:', e));
+            };
+            
+            crash.play().catch(e => console.log('Audio auto-play blocked:', e));
+          } else {
+            activity.currentTime = 0;
+            activity.volume = 0.5;
+            
+            if (pauseBgPages.includes(page) && audioRef.current) {
+              audioRef.current.pause();
+              activity.onended = () => {
+                if (audioRef.current) audioRef.current.play().catch(e => console.log('Audio auto-play blocked:', e));
+              };
             }
             
-            /* Video showcase styling */
-            .video-showcase {
-                margin-bottom: 2em;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 8px;
-                padding: 15px;
-                background: rgba(0, 0, 0, 0.2);
-            }
-            
-            .video-container {
-                position: relative;
-                padding-bottom: 56.25%; /* 16:9 aspect ratio */
-                height: 0;
-                overflow: hidden;
-                border-radius: 4px;
-            }
-            
-            .video-container iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border: none;
-            }
-            /* --- END CARD STYLES --- */
-        </style>
-	</head>
-	<body class="is-preload">
+            activity.play().catch(e => console.log('Audio auto-play blocked:', e));
+          }
+        }
+      };
 
-		<div id="wrapper">
+      // Scroll to top on page change
+      React.useEffect(() => {
+        window.scrollTo(0, 0);
+      }, [currentPage]);
 
-				<header id="header">
-						<div class="logo">
-							<span class="icon fa-gem"></span>
-						</div>
-						<div class="content" id="home">
-							<div class="inner">
-								<h1>Ayaan Khan</h1>
-								<p>Unity Developer I Technical Artist I Game Programmer</p>
-							</div>
-						</div>
-						
-						<nav>
-							<ul>
-								<li><a href="#intro">ABOUT</a></li> 
-								<li><a href="#work">GAMES</a></li>
-								<li><a href="#extras">EXTRAS</a></li>
-								<li><a href="#resume">RESUME</a></li>
-							</ul>
-						</nav>
-                        
-                        <div class="actions" style="padding-top: 1em; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                            <a href="#resume" class="button large primary icon solid fa-download">DOWNLOAD RESUME</a>
-                        </div>
-                        
-					</header>
+      return (
+        <div className="selection:bg-primary selection:text-black flex flex-col min-h-screen">
+          <audio 
+            ref={audioRef} 
+            src="./Grand-Theft-Auto-San-Andreas-Theme-Song.mp3" 
+            loop 
+            autoPlay 
+            onPlay={() => setIsMusicPlaying(true)}
+            onPause={() => setIsMusicPlaying(false)}
+          />
+          <BackgroundSlideshow />
+          <div className="gta-overlay"></div>
+          <Navbar currentPage={currentPage} setCurrentPage={handlePageChange} />
+          
+          <main className="flex-grow pt-28 pb-20">
+            <AnimatePresence mode="wait">
+              {currentPage === 'home' && (
+                <motion.div key="home" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                  <Hero setCurrentPage={handlePageChange} />
+                </motion.div>
+              )}
+              {currentPage === 'about' && (
+                <motion.div key="about" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                  <About />
+                </motion.div>
+              )}
+              {currentPage === 'games' && (
+                <motion.div key="games" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                  <Games 
+                    onVideoModalOpen={() => {
+                      if (audioRef.current) audioRef.current.pause();
+                      Object.values(activitySounds).forEach(s => { s.pause(); s.onended = null; });
+                    }} 
+                    onVideoModalClose={() => {
+                      if (audioRef.current) audioRef.current.play().catch(()=>{});
+                    }} 
+                  />
+                </motion.div>
+              )}
+              {currentPage === 'extras' && (
+                <motion.div key="extras" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                  <Extras />
+                </motion.div>
+              )}
+              {currentPage === 'resume' && (
+                <motion.div key="resume" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                  <Resume />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </main>
+          
+          <button 
+            onClick={() => {
+              if (audioRef.current) {
+                if (audioRef.current.paused) {
+                  audioRef.current.play().catch(()=>{});
+                } else {
+                  audioRef.current.pause();
+                }
+              }
+            }}
+            className="fixed bottom-8 right-8 z-[100] glass-panel p-4 rounded-full text-white/50 hover:text-primary hover:border-primary/50 transition-all hover:scale-110 shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+          >
+            {isMusicPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
+          </button>
 
-				<div id="main">
+          <Footer />
+        </div>
+      );
+    }
 
-						<article id="intro">
-								<div class="article-nav">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button large">HOME</a></li>
-                                        <li><a href="#work" class="button large">GAMES</a></li>
-                                        <li><a href="#extras" class="button large">EXTRAS</a></li>
-                                        <li><a href="#resume" class="button large">RESUME</a></li>
-                                    </ul>
-                                </div>
-                                
-								<h2 class="major">ABOUT</h2>
-								<span class="image main"><img src="images/Ayaanphoto.jpg" alt="Ayaan Khan Profile Photo with Anime/Manga Background" /></span>
-								
-								<p>Hello, I'm Ayaan Khan, and this is my portfolio showcasing my work as a Unity Developer, Technical Artist, and Game Programmer.</p>
-								<p>I am currently pursuing an M.Sc. in Game Technology, where I am building strong skills in game design, development, and technical art. My goal is to become a Game Technical Artist and Game Developer, combining creativity with technical expertise to craft engaging and visually immersive experiences. I enjoy exploring the balance between art and technology—whether it's bringing characters and environments to life, optimizing workflows, or experimenting with new game mechanics. Driven and curious, I am eager to contribute to the gaming industry with innovative ideas and impactful projects.</p>
-
-								<hr /> 
-
-								<p>Outside of academics and game development, I enjoy watching anime, drawing, exploring new places, and trying out different kinds of food. I also have a keen interest in learning new languages, especially Japanese, as I love discovering new cultures and perspectives.</p>
-
-                                <hr />
-							</article>
-
-						<article id="work">
-								<div class="article-nav">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button large">HOME</a></li>
-                                        <li><a href="#intro" class="button large">ABOUT</a></li>
-                                        <li><a href="#extras" class="button large">EXTRAS</a></li>
-                                        <li><a href="#resume" class="button large">RESUME</a></li>
-                                    </ul>
-                                </div>
-                                
-								<h2 class="major">Games & Projects</h2>
-								<span class="image main"><img src="images/goku.jpeg" alt="Silhouette of Goku powering up against a fading background" /></span>
-								
-								<p>Here you can explore my game development projects, categorized by scope and focus, showcasing full-scale team projects and smaller technical demonstrations. Click on any card to see a detailed breakdown of my contributions and technical work.</p>
-								
-                                <hr />
-
-                                <section>
-                                    <h3 class="major">🚀 GROUP PROJECT / FINAL YEAR PROJECT</h3>
-                                    <p>In-depth projects requiring long-term development, advanced technical execution, and collaboration.</p>
-                                    
-                                    <div class="row">
-                                        <div class="col-4 col-12-small">
-                                            <a href="#article-supermarket-showdown" class="card-link"> 
-                                                <div class="project-card">
-                                                    <img src="images/Supermarket Showdown.png" alt="Screenshot of Supermarket Showdown game" />
-                                                    <div class="card-content">
-                                                        <h4>SUPERMARKET SHOWDOWN</h4>
-                                                        <p class="project-info">PROJECT TYPE: Physics Based Ragdoll</p>
-                                                        <p class="project-info">GAME TYPE: PVP Party Game</p>
-                                                        <p class="project-info">ENGINE: Unity</p>
-                                                        <span class="button small icon solid fa-arrow-right" style="margin-top: 1em;">View Details</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <hr />
-
-                                <section>
-                                    <h3 class="major">⚙️ PROTOTYPES AND UNIQUE MECHANICS</h3>
-                                    <p>Technical demonstrations focusing on specific coding challenges, unique gameplay systems experiments.</p>
-                                    
-                                    <div class="row">
-                                        <div class="col-4 col-12-small">
-                                            <a href="#article-drift-rush" class="card-link"> 
-                                                <div class="project-card">
-                                                    <img src="images/DRIFT RUSH.png" alt="Screenshot of Drift Rush game" />
-                                                    <div class="card-content">
-                                                        <h4>DRIFT RUSH</h4>
-                                                        <p class="project-info">PROJECT TYPE: Prototype</p>
-                                                        <p class="project-info">GAME TYPE: Endless Runner</p>
-                                                        <p class="project-info">ENGINE: Unity</p>
-                                                        <span class="button small icon solid fa-arrow-right" style="margin-top: 1em;">View Details</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="col-4 col-12-small">
-                                            <a href="#article-weapon-throw-recall" class="card-link"> 
-                                                <div class="project-card">
-                                                    <img src="images/WEAPON THROW & RECALL.png" alt="Screenshot of Weapon Throw & Recall System" />
-                                                    <div class="card-content">
-                                                        <h4>WEAPON THROW & RECALL</h4>
-                                                        <p class="project-info">PROJECT TYPE: Prototype</p>
-                                                        <p class="project-info">GAME TYPE: Action</p>
-                                                        <p class="project-info">ENGINE: Unity</p>
-                                                        <span class="button small icon solid fa-arrow-right" style="margin-top: 1em;">View Details</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="col-4 col-12-small">
-                                            <a href="#article-first-person-shooter" class="card-link"> 
-                                                <div class="project-card">
-                                                    <img src="images/The First Person Shooter.png" alt="Screenshot of First Person Shooter game" />
-                                                    <div class="card-content">
-                                                        <h4>FIRST PERSON SHOOTER</h4>
-                                                        <p class="project-info">PROJECT TYPE: Prototype</p>
-                                                        <p class="project-info">GAME TYPE: FPS Combat System</p>
-                                                        <p class="project-info">ENGINE: Unity</p>
-                                                        <span class="button small icon solid fa-arrow-right" style="margin-top: 1em;">View Details</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row" style="margin-top: 2em;">
-                                        <div class="col-6 col-12-small">
-                                            <a href="#article-fun-educational-puzzle" class="card-link"> 
-                                                <div class="project-card">
-                                                    <img src="images/EDUCATIONAL PUZZLE.png" alt="Screenshot of Fun and Educational Puzzle game" />
-                                                    <div class="card-content">
-                                                        <h4>FUN & EDUCATIONAL PUZZLE</h4>
-                                                        <p class="project-info">PROJECT TYPE: Prototype</p>
-                                                        <p class="project-info">GAME TYPE: Reasoning Puzzle</p>
-                                                        <p class="project-info">ENGINE: Unity</p>
-                                                        <span class="button small icon solid fa-arrow-right" style="margin-top: 1em;">View Details</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="col-6 col-12-small">
-                                            <a href="#article-trim-and-tonic" class="card-link"> 
-                                                <div class="project-card">
-                                                   <img src="images/TRIM_AND_TONIC.png" alt="Main screenshot of the Trim & Tonic cocktail bar game" />
-                                                    <div class="card-content">
-                                                        <h4>TRIM & TONIC</h4>
-                                                        <p class="project-info">PROJECT TYPE: Prototype</p>
-                                                        <p class="project-info">GAME TYPE: Resource Management</p>
-                                                        <p class="project-info">ENGINE: Unity</p>
-                                                        <span class="button small icon solid fa-arrow-right" style="margin-top: 1em;">View Details</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <hr />
-                                
-								<div class="article-nav">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button large">HOME</a></li>
-                                        <li><a href="#intro" class="button large">ABOUT</a></li>
-                                        <li><a href="#extras" class="button large">EXTRAS</a></li>
-                                        <li><a href="#resume" class="button large">RESUME</a></li>
-                                    </ul>
-                                </div>
-							</article>
-
-                        <!-- Supermarket Showdown Project Article -->
-                        <article id="article-supermarket-showdown">
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                    <li><a href="#intro" class="button large">ABOUT</a></li>
-                                    <li><a href="#resume" class="button large">RESUME</a></li>
-                                </ul>
-                            </div>
-                            
-                            <h2 class="major">SUPERMARKET SHOWDOWN</h2>
-                            <span class="image main"><img src="images/Supermarket Showdown.png" alt="Screenshot of Supermarket Showdown game" /></span>
-                            
-                            <p>Supermarket Showdown is a hilarious ragdoll PVP game set in a chaotic supermarket environment. Both players have the same shopping list and race to collect all the items first. Along the way, they can create chaos by throwing products, spilling oil, or stealing from each other's cart. With silly physics and funny interactions, the game turns everyday shopping into a wild and competitive experience that's perfect for laughs and friendly battles.</p>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Project Summary</h3>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Project Type</td>
-                                            <td>Physics Based Ragdoll</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Focus</td>
-                                            <td>PVP Party Game, Ragdoll Physics, Multiplayer Chaos</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Engine</td>
-                                            <td>Unity</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Game Type</td>
-                                            <td>PVP Party Game</td>
-                                        </tr>
-                                        <tr>
-                                            <td>My Role</td>
-                                            <td>Idea Generation, Lighting & Modding Unity Integration</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                            <hr />
-
-                            <section>
-                                <h3 class="major">Technical Contributions</h3>
-                                <ul>
-                                    <li>Ragdoll Physics System: Developed the core ragdoll physics mechanics that create hilarious character movements and interactions</li>
-                                    <li>Multiplayer PVP Systems: Implemented real-time multiplayer functionality for competitive shopping chaos</li>
-                                    <li>Inventory & Shopping System: Created the shopping list mechanics and inventory management for both players</li>
-                                    <li>Interactive Environment: Designed and implemented interactive supermarket elements like slippery oil spills and throwable products</li>
-                                    <li>Cart Mechanics: Developed the shopping cart physics and stealing mechanics for competitive gameplay</li>
-                                </ul>
-                            </section>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Game Features</h3>
-                                <div class="row">
-                                    <div class="col-4 col-12-small">
-                                        <h4>Ragdoll Chaos</h4>
-                                        <p>Hilarious physics-based character movements and collisions</p>
-                                    </div>
-                                    <div class="col-4 col-12-small">
-                                        <h4>Competitive Shopping</h4>
-                                        <p>Race against another player to complete your shopping list first</p>
-                                    </div>
-                                    <div class="col-4 col-12-small">
-                                        <h4>Silly Sabotage</h4>
-                                        <p>Throw products, spill oil, and steal items to disrupt your opponent</p>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Video Showcase</h3>
-                                <div class="video-showcase">
-                                    <h4>Supermarket Showdown Gameplay</h4>
-                                    <div class="video-container">
-                                        <iframe src="https://player.vimeo.com/video/1132820914?h=077e682664&title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                    <p style="margin-top: 1em;">This video demonstrates the hilarious ragdoll physics, competitive shopping mechanics, and chaotic multiplayer interactions that make Supermarket Showdown a perfect party game experience.</p>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <!-- Drift Rush Project Article -->
-                        <article id="article-drift-rush">
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                    <li><a href="#intro" class="button large">ABOUT</a></li>
-                                    <li><a href="#resume" class="button large">RESUME</a></li>
-                                </ul>
-                            </div>
-                            
-                            <h2 class="major">DRIFT RUSH</h2>
-                            <span class="image main"><img src="images/DRIFT RUSH.png" alt="Screenshot of Drift Rush game" /></span>
-                            
-                            <p>Drift Rush is an exciting endless runner prototype built in Unity that focuses on high-speed drifting mechanics and dynamic obstacle navigation. Players control a vehicle that must maintain speed while performing precision drifts to avoid obstacles and collect power-ups.</p>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Project Summary</h3>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Project Type</td>
-                                            <td>Prototype</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Focus</td>
-                                            <td>Drifting Mechanics, Dynamic Obstacle Generation, Speed Management</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Engine</td>
-                                            <td>Unity (C#)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>My Role</td>
-                                            <td>Solo Developer (Designed and implemented all game systems)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                            <hr />
-
-                            <section>
-                                <h3 class="major">Technical Contributions</h3>
-                                <ul>
-                                    <li>Drifting Physics: Implemented realistic drifting mechanics with proper vehicle physics and traction control.</li>
-                                    <li>Procedural Generation: Developed a system that dynamically creates challenging track layouts with increasing difficulty.</li>
-                                    <li>Obstacle System: Created varied obstacle patterns that require precise timing and drifting to avoid.</li>
-                                    <li>Score Multiplier: Designed a scoring system that rewards players for maintaining drift chains and speed.</li>
-                                </ul>
-                            </section>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Video Showcase</h3>
-                                <div class="video-showcase">
-                                    <h4>Drift Rush Gameplay Clip</h4>
-                                    <div class="video-container">
-                                        <iframe src="https://player.vimeo.com/video/1122611732?h=077e682664&title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                    <p style="margin-top: 1em;">This video demonstrates the high-speed drifting mechanics and dynamic obstacle navigation in Drift Rush.</p>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <!-- Weapon Throw & Recall System Project Article -->
-                        <article id="article-weapon-throw-recall">
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                    <li><a href="#intro" class="button large">ABOUT</a></li>
-                                    <li><a href="#resume" class="button large">RESUME</a></li>
-                                </ul>
-                            </div>
-                            
-                            <h2 class="major">WEAPON THROW & RECALL SYSTEM</h2>
-                            <span class="image main"><img src="images/WEAPON THROW & RECALL.png" alt="Screenshot of Weapon Throw & Recall System" /></span>
-                            
-                            <p>This prototype is a technical demonstration inspired by the impactful combat and visual fidelity of God of War (2018). The project showcases a real-time system for simulating deep, clean slices or cuts into a large surface upon weapon impact. This effect is achieved through custom shaders or mesh manipulation techniques, ensuring the slice mark is instantly and precisely drawn onto the geometry where the weapon hits. It highlights proficiency in creating responsive, high-fidelity combat visuals for games.</p>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Project Summary</h3>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Project Type</td>
-                                            <td>Prototype</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Focus</td>
-                                            <td>Weapon Mechanics, Physics-based Throwing, Recall System, Combat Visuals</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Engine</td>
-                                            <td>Unity (C#)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Inspiration</td>
-                                            <td>God of War (2018) combat mechanics</td>
-                                        </tr>
-                                        <tr>
-                                            <td>My Role</td>
-                                            <td>Solo Developer (Implemented all weapon systems and visual effects)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                            <hr />
-
-                            <section>
-                                <h3 class="major">Technical Contributions</h3>
-                                <ul>
-                                    <li>Weapon Throw Mechanics: Developed physics-based throwing system with realistic trajectory and impact physics</li>
-                                    <li>Recall System: Implemented smooth weapon recall mechanics with visual trail effects and precise return pathing</li>
-                                    <li>Dynamic Impact Effects: Created real-time slicing and cutting effects on surfaces using custom shaders</li>
-                                    <li>Combat Integration: Seamlessly integrated throw/recall mechanics with core combat systems</li>
-                                    <li>Visual Feedback: Designed particle systems and visual effects for weapon trajectory and impacts</li>
-                                </ul>
-                            </section>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">System Features</h3>
-                                <div class="row">
-                                    <div class="col-4 col-12-small">
-                                        <h4>Physics-based Throwing</h4>
-                                        <p>Realistic weapon trajectory with gravity and collision detection</p>
-                                    </div>
-                                    <div class="col-4 col-12-small">
-                                        <h4>Smart Recall</h4>
-                                        <p>Intelligent return pathing with obstacle avoidance</p>
-                                    </div>
-                                    <div class="col-4 col-12-small">
-                                        <h4>Dynamic Damage</h4>
-                                        <p>Impact-based damage system with environmental destruction</p>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Video Showcase</h3>
-                                <div class="video-showcase">
-                                    <h4>Weapon Throw & Recall System Demo</h4>
-                                    <div class="video-container">
-                                        <iframe src="https://player.vimeo.com/video/1122611723?h=077e682664&title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                    <p style="margin-top: 1em;">This video demonstrates the weapon throw mechanics, recall system, and the dynamic slicing effects on surfaces, showcasing the high-fidelity combat visuals inspired by God of War.</p>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <!-- First Person Shooter Project Article -->
-                        <article id="article-first-person-shooter">
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                    <li><a href="#intro" class="button large">ABOUT</a></li>
-                                    <li><a href="#resume" class="button large">RESUME</a></li>
-                                </ul>
-                            </div>
-                            
-                            <h2 class="major">FIRST PERSON SHOOTER</h2>
-                            <span class="image main"><img src="images/The First Person Shooter.png" alt="Screenshot of First Person Shooter game" /></span>
-                            
-                            <p>This project is a First-Person Shooter (FPS) prototype built in Unity (C#) to demonstrate essential combat systems. It features a complete Weapon System for multiple guns with full reloading logic and different fire modes. The focus was on using Hitscan/Raycasting to drive dynamic object destruction, allowing targets and barriers to break realistically upon impact. This showcases strong skills in core gameplay programming and responsive combat feedback.</p>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Project Summary</h3>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Project Type</td>
-                                            <td>Prototype / Combat System Demo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Focus</td>
-                                            <td>Weapon Systems, Hitscan/Raycasting, Dynamic Destruction, Combat Feedback</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Engine</td>
-                                            <td>Unity (C#)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>My Role</td>
-                                            <td>Solo Developer (Designed and implemented all combat systems)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                            <hr />
-
-                            <section>
-                                <h3 class="major">Technical Contributions</h3>
-                                <ul>
-                                    <li>Weapon System: Developed a complete weapon system supporting multiple guns with different fire modes and full reload mechanics.</li>
-                                    <li>Hitscan/Raycasting: Implemented precise hit detection using raycasting for realistic bullet trajectories and impact.</li>
-                                    <li>Dynamic Destruction: Created a system for realistic object destruction where targets and barriers break upon impact.</li>
-                                    <li>Combat Feedback: Designed responsive visual and audio feedback systems for immersive combat experience.</li>
-                                    <li>Ammo Management: Programmed comprehensive ammo and reload systems with different magazine capacities.</li>
-                                </ul>
-                            </section>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Video Showcase</h3>
-                                <div class="video-showcase">
-                                    <h4>First Person Shooter Gameplay Clip</h4>
-                                    <div class="video-container">
-                                        <iframe src="https://player.vimeo.com/video/1122611747?h=077e682664&title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                    <p style="margin-top: 1em;">This video demonstrates the core FPS mechanics including weapon handling, shooting mechanics, and dynamic object destruction.</p>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <!-- Fun and Educational Puzzle Project Article -->
-                        <article id="article-fun-educational-puzzle">
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                    <li><a href="#intro" class="button large">ABOUT</a></li>
-                                    <li><a href="#resume" class="button large">RESUME</a></li>
-                                </ul>
-                            </div>
-                            
-                            <h2 class="major">FUN & EDUCATIONAL PUZZLE</h2>
-                            <span class="image main"><img src="images/EDUCATIONAL PUZZLE.png" alt="Screenshot of Fun and Educational Puzzle game" /></span>
-                            
-                            <p>This educational puzzle game combines fun gameplay with learning reasoning skills, inspired by games like Baba Is You. Players solve various types of reasoning puzzles including Coding-Decoding, Blood Relations, and Direction Sense problems. Each level presents a unique challenge where players must manipulate blocks to form correct solutions, unlocking doors and collecting treasures as they progress.</p>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Project Summary</h3>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Project Type</td>
-                                            <td>Prototype / Educational Game</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Focus</td>
-                                            <td>Reasoning Puzzles, Educational Gameplay, Puzzle Mechanics</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Engine</td>
-                                            <td>Unity (C#)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>My Role</td>
-                                            <td>Solo Developer (Designed and implemented all puzzle systems and mechanics)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                            <hr />
-
-                            <section>
-                                <h3 class="major">Technical Contributions</h3>
-                                <ul>
-                                    <li>Puzzle System: Developed multiple puzzle types including Coding-Decoding, Blood Relations, and Direction Sense challenges</li>
-                                    <li>Block Manipulation: Created intuitive drag-and-drop mechanics for puzzle solving</li>
-                                    <li>Progression System: Implemented level progression with treasure collection and door unlocking mechanics</li>
-                                    <li>Educational Content: Designed puzzles that teach logical reasoning skills while maintaining engaging gameplay</li>
-                                    <li>UI/UX Design: Created clean, intuitive interfaces that guide players through complex reasoning problems</li>
-                                </ul>
-                            </section>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Video Showcase</h3>
-                                <div class="video-showcase">
-                                    <h4>Fun & Educational Puzzle Gameplay</h4>
-                                    <div class="video-container">
-                                        <iframe src="https://player.vimeo.com/video/1122611767?h=077e682664&title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                    <p style="margin-top: 1em;">This video demonstrates the educational puzzle mechanics, showing how players solve different types of reasoning challenges and progress through levels.</p>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <!-- Trim & Tonic Project Article -->
-                        <article id="article-trim-and-tonic">
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                    <li><a href="#intro" class="button large">ABOUT</a></li>
-                                    <li><a href="#resume" class="button large">RESUME</a></li>
-                                </ul>
-                            </div>
-                            
-                            <h2 class="major">TRIM & TONIC</h2>
-                            <span class="image main"><img src="images/TRIM_AND_TONIC.png" alt="Main screenshot of the Trim & Tonic cocktail bar game" /></span>
-                            
-                            <p>Trim & Tonic is a resource management prototype where players work in a cocktail shop. The core gameplay loop involves mixing various drinks to make the perfect drink for our customer, balancing precise pouring mechanics with speed and order complexity.</p>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Project Summary</h3>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Project Type</td>
-                                            <td>Prototype / Core Mechanic Demo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Focus</td>
-                                            <td>Mixing Logic, Customer Order Handling, UI Feedback</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Engine</td>
-                                            <td>Unity (C#)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>My Role</td>
-                                            <td>Systems Programmer (Developed the ingredient mixing and order validation systems)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                            <hr />
-
-                            <section>
-                                <h3 class="major">Technical Contributions</h3>
-                                <ul>
-                                    <li>Mixing Logic: Implemented the core system for combining ingredients in specific ratios to meet customer demands.</li>
-                                    <li>Precision Mechanics: Developed the UI and code for a timing/meter system to ensure accurate "pouring."</li>
-                                    <li>Customer Satisfaction: Programmed customer queues and a satisfaction/patience rating linked to game scoring.</li>
-                                </ul>
-                            </section>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Video Showcase</h3>
-                                <div class="video-showcase">
-                                    <h4>Trim & Tonic Gameplay Clip</h4>
-                                    <div class="video-container">
-                                        <iframe src="https://player.vimeo.com/video/1132757385?h=077e682664&title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                    <p style="margin-top: 1em;">This video demonstrates the core cocktail mixing mechanic and the real-time customer feedback.</p>
-                                </div>
-                            </section>
-
-                            <hr />
-                            
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#work" class="button large">BACK TO PROJECTS</a></li>
-                                </ul>
-                            </div>
-                        </article>
-						
-						<article id="extras">
-								<div class="article-nav">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button large">HOME</a></li>
-                                        <li><a href="#intro" class="button large">ABOUT</a></li>
-                                        <li><a href="#work" class="button large">GAMES</a></li>
-                                        <li><a href="#resume" class="button large">RESUME</a></li>
-                                    </ul>
-                                </div>
-                                
-								<h2 class="major">Extras: Art & Experiments</h2>
-								<span class="image main"><img src="images/Extra.jpeg" alt="Stylized illustration pattern of game controllers, arcade cabinets, and gaming characters" /></span>
-								
-								<p>This section showcases personal projects and experiments in both 2D drawing and 3D asset creation, reflecting the creative and technical sides of my role as a Technical Artist and Developer.</p>
-								
-								<hr />
-								
-								<section>
-									<h3 class="major">Selected 2D Artwork</h3>
-									<p>My passion for anime and Japanese culture often inspires my sketching and drawing.</p>
-									
-									<div class="row">
-										
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/1.jpg" alt="Anime character sketch 1" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Sketch 1: Focused Portrait</p>
-										</div>
-										
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/2.jpg" alt="Anime character sketch 2" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Sketch 2: Subtle Expression</p>
-										</div>
-										
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/3.jpg" alt="Anime character sketch 3" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Sketch 3: Full-body dynamic pose</p>
-										</div>
-										
-										<div class="col-6 col-12-small">
-											<span class="image fit">
-												<img src="images/4.jpg" alt="Anime character sketch 4" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Sketch 4: Character with sunglasses</p>
-										</div>
-										
-										<div class="col-6 col-12-small">
-											<span class="image fit">
-												<img src="images/5.jpg" alt="Anime character sketch 5" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Sketch 5: Detailed character design</p>
-                                        </div>
-
-									</div>
-								</section>
-								
-								<hr />
-								
-								<section>
-									<h3 class="major">3D Assets & Modeling</h3>
-									<p>Examples of 3D modeling and asset creation for game environments and characters.</p>
-									
-									<div class="row">
-										
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d1.png" alt="3D Model of a shelf or library shelf" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Modular Asset: shelf</p>
-										</div>
-										
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d2.png" alt="3D chipes pake with texture/UI shown" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Prop Texturing: chipes pake</p>
-										</div>
-										
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d3.png" alt="3D Model of a plastic bottle" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Hard-Surface Modeling: Bottle</p>
-										</div>
-										
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d4.png" alt="3D Model with wireframe or UV map visible" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Technical Demo: UV Mapping</p>
-										</div>
-
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d5.png" alt="3D Model of a wooden treasure chest" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Prop Asset: Treasure Chest</p>
-										</div>
-
-										<div class="col-4 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d6.2.jpg" alt="3D Environment Scene (Interior)" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Environment Blockout (Interior)</p>
-										</div>
-										
-										<div class="col-6 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d6.jpg" alt="3D Character Model: Chef Bob" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Character Model: Chef Bob</p>
-										</div>
-										
-										<div class="col-6 col-12-small">
-											<span class="image fit">
-												<img src="images/3d/3d8.png" alt="3D Asset of a sword or dagger" />
-											</span>
-											<p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Weapon Asset: Katana</p>
-										</div>
-									</div>
-								</section>
-								
-								<hr />
-                                <div class="article-nav">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button large">HOME</a></li>
-                                        <li><a href="#intro" class="button large">ABOUT</a></li>
-                                        <li><a href="#work" class="button large">GAMES</a></li>
-                                        <li><a href="#resume" class="button large">RESUME</a></li>
-                                    </ul>
-                                </div>
-							</article>
-						
-                        <article id="resume">
-                            <div class="article-nav">
-                                <ul class="actions">
-                                    <li><a href="#" class="button large">HOME</a></li>
-                                    <li><a href="#intro" class="button large">ABOUT</a></li>
-                                    <li><a href="#work" class="button large">GAMES</a></li>
-                                    <li><a href="#extras" class="button large">EXTRAS</a></li>
-                                </ul>
-                            </div>
-                            
-                            <h2 class="major">RESUME / CV</h2>
-                            
-                            <p>For a detailed breakdown of my education, professional experience, skills, and technical proficiencies in Unity, C#, and 3D modeling, please download my curriculum vitae (CV) below.</p>
-                            
-                            <hr />
-                            
-                            <section>
-                                <h3 class="major">Download Details</h3>
-                                <p>This document provides comprehensive information on my specific contributions to game projects and my technical background in game development and art.</p>
-                            </section>
-                            
-                            <ul class="actions">
-                                <li><a href="ayaanresume.pdf" class="button large primary icon solid fa-download">DOWNLOAD FULL RESUME (PDF)</a></li>
-                            </ul>
-                            
-                            <hr />
-                        </article>
-						
-						</div>
-
-				<footer id="footer">
-						<p class="copyright">&copy; Ayaan Khan.</p>
-					</footer>
-
-			</div>
-
-		<div id="bg"></div>
-
-		<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+    const root = createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
 </html>
