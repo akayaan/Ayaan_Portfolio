@@ -258,10 +258,10 @@
 
     const GTA_IMAGES = [
       'https://i.imgur.com/WeL3tIJ.jpg',
-      'https://i.imgur.com/1SIMnDs.jpg',
+      './Images/bg2.png',
       'https://i.imgur.com/LKNXjXx.jpg',
       'https://i.imgur.com/uYPZdHV.jpg',
-      'https://i.imgur.com/LX6Pqqi.jpg'
+      './Images/bg.png'
     ];
 
     const BackgroundSlideshow = () => {
@@ -287,7 +287,7 @@
                 opacity: { duration: 3, ease: "easeInOut" },
                 scale: { duration: 15, ease: "linear" } 
               }}
-              className="absolute -top-[10%] left-0 w-full h-[120%] bg-cover bg-bottom"
+              className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${GTA_IMAGES[currentIndex]})` }}
             />
           </AnimatePresence>
